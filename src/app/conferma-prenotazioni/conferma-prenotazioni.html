@@ -1,0 +1,118 @@
+<div class="min-h-screen">
+    <nav class="bg-white px-10 py-5 flex gap-x-5 items-center border-b border-gray-200" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <button class="flex items-center gap-x-2 px-4 py-2 font-bold bg-blue-500 text-white
+     rounded-lg hover:cursor-pointer hover:bg-blue-600 duration-200" (click)="cambiaPagina()"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Torna alla home</button>
+        <h1 class="font-bold text-2xl">Prenotazioni da Confermare</h1>
+    </nav>
+
+    <div class="w-full max-w-300 mx-auto my-10">
+        <div class="bg-white rounded-lg shadow-sm p-5 mb-7.5">
+            <div class="text-blue-500 font-bold text-4xl">{{prenotazioniDaConfermare}}</div>
+            <div class="text-gray-500 text-sm">Prenotazion@if(prenotazioniDaConfermare == 1){e}@else{i} in attesa di conferma</div>
+        </div>
+
+        @for (item of prenotazioni; track $index) {
+            <div class="bg-white rounded-lg shadow-sm p-5 hover:shadow-lg duration-300">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-x-3">
+                        <div class="w-12.5 h-12.5 bg-linear-to-b from-[#667eea] to-[#764ba2] 
+                        rounded-full text-white flex justify-center items-center font-bold text-xl">{{item.client.name.split(" ")[0][0]}}{{item.client.name.split(" ")[1][0]}}</div>
+                        <div>
+                            <div class="font-semibold text-lg">{{item.client.name}}</div>
+                            <div class="text-gray-500 text-sm">📧 {{item.client.email}}</div>
+                            <div class="text-gray-500 text-sm">📱 {{item.client.phone}}</div>
+                        </div>
+                    </div>
+                    <div class="bg-amber-100 py-1.5 px-3 rounded-2xl text-sm text-yellow-700 font-semibold">
+                        {{resultOperations[$index]}}
+                    </div>
+                </div>
+                <div class="mt-5 bg-gray-100 p-3.75 rounded-lg" style="display: grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));">
+                    <div>
+                        <div class="text-gray-500 text-xs font-semibold">🎯 SERVIZIO</div>
+                        <div class="text-sm font-semibold">{{item.service.name}}</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-500 text-xs font-semibold">⏱️ DURATA</div>
+                        <div class="text-sm font-semibold">{{item.service.duration}} minuti</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-500 text-xs font-semibold">📅 DATA</div>
+                        <div class="text-sm font-semibold">{{date[$index]}}</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-500 text-xs font-semibold">🕐 ORARIO</div>
+                        <div class="text-sm font-semibold">{{item.startTime}}</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-500 text-xs font-semibold">💰 PREZZO</div>
+                        <div class="text-lg font-semibold text-green-500">€{{item.service.price}}</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-500 text-xs font-semibold">📥 RICEVUTA</div>
+                        <div class="text-sm text-gray-500 font-semibold">{{quantoTempoFa(item.createdAt)}}</div>
+                    </div>
+                </div>
+
+                <div class="flex mt-5 justify-end gap-x-2">
+                    <button [class.disabledBtnAnnulla]="resultOperations[$index] != '⏳ Da confermare'"
+                    [disabled]="resultOperations[$index] != '⏳ Da confermare'" (click)="showModal('annulla')" class="flex items-center bg-red-500 text-white gap-x-2 rounded-lg py-1.5 px-5 font-semibold hover:cursor-pointer
+                    hover:bg-red-600 duration-200     disabled:bg-red-200disabled:text-red-400disabled:cursor-not-allowed
+                    disabled:opacity-60">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        Rifiuta
+                    </button>
+                    <button [disabled]="resultOperations[$index] != '⏳ Da confermare'" (click)="showModal('conferma')" class="flex items-center bg-[#10B981] text-white gap-x-2 rounded-lg py-1.5 px-5 font-semibold hover:cursor-pointer
+                    hover:bg-[#059669] duration-200 disabled:bg-emerald-200 disabled:text-emerald-400 disabled:cursor-not-allowed
+                    disabled:opacity-60">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Conferma prenotazione
+                    </button>
+                </div>
+
+                <div [hidden]="!showModalBool" class="flex items-center justify-center fixed inset-0 z-50 bg-black/40">
+                    <div id="modal" class="bg-white rounded-2xl p-7 w-full max-w-125">
+                        <div [class.bg-[#FEE2E2]]="showModalAnnulla" [class.bg-[#D1FAE5]]="showModalConferma"
+                         class="mx-auto my-0 rounded-full w-16 h-16 flex items-center justify-center">
+                            @if(showModalAnnulla){
+                            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            }
+                            @else {
+                                <svg class="w-7 h-7 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            }
+                        </div>
+                        <h2 class="text-center font-semibold text-2xl mt-2">@if(showModalAnnulla){Rifiuta prenotazione}
+                            @else{Conferma Prenotazione}
+                        </h2>
+                        <p class="text-gray-500 mt-3 text-center">@if(showModalAnnulla){Sei sicuro di voler rifiutare la prenotazione di <span class="font-bold text-gray-600">{{item.client.name}}</span>?}
+                        @else{Vuoi confermare la prenotazione di <span class="font-bold text-gray-600">{{item.client.name}}</span> per il servizio 
+                            <span class="font-bold text-gray-600">{{item.service.name}}</span> il giorno <span class="font-bold text-gray-600">{{getData(item.date)}}</span>
+                             alle ore <span class="font-bold text-gray-600">{{item.startTime}}</span>?}
+                        </p>
+                        @if(showModalAnnulla){<p class="text-gray-500 mt-5 text-center">Il cliente riceverà una notifica del rifiuto.</p>}
+                        <div class="mt-5 flex items-center justify-center gap-x-2">
+                            <button (click)="annullaFunction()" class="flex items-center bg-gray-100 text-black gap-x-2 rounded-lg py-1.5 px-15 font-semibold hover:cursor-pointer
+                            hover:bg-gray-200 duration-200">
+                                Annulla
+                            </button>
+                            @if(showModalAnnulla){
+                            <button (click)="modificaPrenotazione('rifiuta',item._id,$index)" class="flex items-center bg-red-500 text-white gap-x-2 rounded-lg py-1.5 px-15 font-semibold hover:cursor-pointer
+                            hover:bg-red-600 duration-200">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                Rifiuta
+                            </button>}
+                            @else {
+                               <button (click)="modificaPrenotazione('conferma',item._id,$index)" class="flex items-center bg-[#10B981] text-white gap-x-2 rounded-lg py-1.5 px-15 font-semibold hover:cursor-pointer
+                            hover:bg-[#059669] duration-200">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-4 h-4"><path _ngcontent-ng-c114663941="" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Conferma
+                            </button> 
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+     </div>
+</div>

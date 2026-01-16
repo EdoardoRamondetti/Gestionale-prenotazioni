@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+.tab {
+  @apply text-gray-500 font-semibold py-3 cursor-pointer duration-200;
+}
+
+.tab:hover {
+  @apply text-black;
+}
+
+.tab.active {
+  @apply text-blue-500 border-b-2 border-blue-500;
+}
+
+.actived {
+  @apply bg-blue-50 text-blue-500 border-l-3 border-blue-500;
+}
+
+.disabledBtnAnnulla{
+  @apply bg-red-200 text-red-400 cursor-not-allowed opacity-60;
+}

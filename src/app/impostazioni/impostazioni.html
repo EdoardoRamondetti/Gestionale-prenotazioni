@@ -1,0 +1,33 @@
+<div class="grid grid-cols-[260px_1fr] grid-rows-[56px_1fr] gap-y-3 min-h-screen overflow-hidden">
+    <app-aside [currentPage]="'impostazioni'" class="row-span-2"></app-aside>
+    <app-header [namePage]="'Impostazioni'"></app-header>
+    <main class="p-6 ps-0 pt-0 pb-0 px-7 col-start-2 flex border-t border-gray-200 overflow-hidden">
+        <aside class="bg-white w-70 pt-5 border-r border-gray-200 shrink-0
+         fixed top-17.25 left-65 h-[calc(100vh-56px)] z-40">
+            <div class="text-gray-500 font-semibold pl-5">Configurazione</div>
+            <div [class.actived]="pagina === 0" (click)="cambiaPagina('impostazioniGenerali',0)" class="flex items-center gap-x-2 mt-5 text-gray-500 hover:cursor-pointer hover:bg-gray-200 duration-300 p-3 pl-5">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                <span>Generali</span>
+            </div>
+            <div [class.actived]="pagina === 1" (click)="cambiaPagina('calendarioOrario',1)" class="flex items-center gap-x-2 text-gray-500 hover:cursor-pointer hover:bg-gray-200 duration-300 p-3 pl-5">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>Calendario & Orari</span>
+            </div>
+            <div [class.actived]="pagina === 2" (click)="cambiaPagina('impostazioniNotifiche',2)" class="flex items-center gap-x-2 text-gray-500 hover:cursor-pointer hover:bg-gray-200 duration-300 p-3 pl-5">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span>Notifiche</span>
+            </div>
+            <div [class.actived]="pagina === 3" (click)="cambiaPagina('impostazioniPagamenti',3)" class="flex items-center gap-x-2 text-gray-500 hover:cursor-pointer hover:bg-gray-200 duration-300 p-3 pl-5">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                <span>Pagamenti</span>
+            </div>
+            <div [class.actived]="pagina === 4" (click)="cambiaPagina('impostazioniPrivacySicurezza',4)" class="flex items-center gap-x-2 text-gray-500 hover:cursor-pointer hover:bg-gray-200 duration-300 p-3 pl-5">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <span>Privacy & Sicurezza</span>
+            </div>
+        </aside>
+        <div class="flex-1 w-full overflow-y-auto pl-6 ml-60">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>

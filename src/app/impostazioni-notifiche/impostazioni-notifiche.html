@@ -1,0 +1,118 @@
+<div class="p-10 pt-5">
+    <h2 class="font-semibold text-3xl">Notifiche</h2>
+    <div class="text-gray-500 mt-3">Gestisci le notifiche email automatiche</div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <h3 class="font-semibold text-lg">Notifiche Email</h3>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Conferma Prenotazione</div>
+                <div class="text-gray-500 text-sm">Invia email quando una prenotazione viene confermata</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[0]"
+                    [class.bg-green-500]="enabled[0]"
+                    (click)="enabled[0] = !enabled[0]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[0]"
+                            [class.translate-x-0]="enabled[0]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Promemoria 24h Prima</div>
+                <div class="text-gray-500 text-sm">Ricorda al cliente l'appuntamento il giorno precedente</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[1]"
+                    [class.bg-green-500]="enabled[1]"
+                    (click)="enabled[1] = !enabled[1]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[1]"
+                            [class.translate-x-0]="enabled[1]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Promemoria 1h Prima</div>
+                <div class="text-gray-500 text-sm">Ricorda al cliente l'appuntamento un'ora prima</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[2]"
+                    [class.bg-green-500]="enabled[2]"
+                    (click)="enabled[2] = !enabled[2]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[2]"
+                            [class.translate-x-0]="enabled[2]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Cancellazione Prenotazione</div>
+                <div class="text-gray-500 text-sm">Invia email quando una prenotazione viene cancellata</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[3]"
+                    [class.bg-green-500]="enabled[3]"
+                    (click)="enabled[3] = !enabled[3]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[3]"
+                            [class.translate-x-0]="enabled[3]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 pb-3">
+            <div>
+                <div class="font-semibold">Richiesta Recensione</div>
+                <div class="text-gray-500 text-sm">Chiedi una recensione dopo il completamento del servizio</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[4]"
+                    [class.bg-green-500]="enabled[4]"
+                    (click)="enabled[4] = !enabled[4]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[4]"
+                            [class.translate-x-0]="enabled[4]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <h3 class="font-semibold text-lg">Configurazione Email</h3>
+        </div>
+        <div class="font-semibold mt-3">Email Mittente</div>
+        <input type="email" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="noreply@beautysalon.it">
+        <div class="text-xs text-gray-500 mt-3">Email che apparirà come mittente nelle notifiche</div>
+        <div class="font-semibold mt-3">Nome Mittente</div>
+        <input type="email" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="Beauty Salon Milano">
+    </div>
+    <div class="mt-5">
+        <button class="bg-white font-semibold p-2 px-4 rounded-md border border-gray-300 mr-3
+        hover:cursor-pointer hover:bg-gray-200 duration-200">Annulla</button>
+        <button class="text-white bg-[#10B981] font-semibold p-2 px-4 rounded-md border border-gray-300
+        hover:cursor-pointer hover:bg-[#059669] duration-200">Salva modifiche</button>
+    </div>
+
+</div>
