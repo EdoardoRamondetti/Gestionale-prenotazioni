@@ -1,0 +1,6 @@
+.active{
+    color: var(--color-blue-500);
+    border-color: var(--color-blue-500);
+    border-left-width: 3px;
+    background-color: var(--color-blue-50);
+}

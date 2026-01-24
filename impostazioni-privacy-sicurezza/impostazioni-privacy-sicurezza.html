@@ -1,0 +1,82 @@
+<div class="p-10 pt-5">
+    <h2 class="font-semibold text-3xl">Privacy & Sicurezza</h2>
+    <div class="text-gray-500 mt-3">Gestisci le impostazioni di privacy e consensi GDPR</div>
+    <div class="flex gap-x-2 bg-blue-50 border border-blue-200 p-4 mt-3 rounded-lg">
+            <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mt-0.75 text-blue-800"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <div>
+                <div class="text-blue-800 font-semibold">Conformità GDPR</div>
+                <div class="text-blue-800">Assicurati che le tue impostazioni siano conformi al Regolamento Generale sulla Protezione dei Dati.</div>
+            </div>
+        </div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <h3 class="font-semibold text-lg">Consensi Privacy</h3>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Richiedi Consenso Marketing</div>
+                <div class="text-gray-500 text-sm">Chiedi il consenso per inviare comunicazioni promozionali</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[0]"
+                    [class.bg-green-500]="enabled[0]"
+                    (click)="enabled[0] = !enabled[0]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[0]"
+                            [class.translate-x-0]="enabled[0]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 pb-3">
+            <div>
+                <div class="font-semibold">Richiedi Consenso Dati Sensibili</div>
+                <div class="text-gray-500 text-sm">Richiedi consenso esplicito per dati sensibili (salute, allergie)</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[1]"
+                    [class.bg-green-500]="enabled[1]"
+                    (click)="enabled[1] = !enabled[1]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[1]"
+                            [class.translate-x-0]="enabled[1]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            <h3 class="font-semibold text-lg">Gestione Dati</h3>
+        </div>
+        <div class="flex gap-x-3 w-full border-b border-gray-300 pb-5">
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Conservazione Dati (mesi)</div>
+                <input type="number" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="24">
+                <div class="text-xs text-gray-500 mt-3">Tempo di conservazione dei dati dei clienti inattivi</div>
+            </div> 
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Backup Automatico</div>
+                <select class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="24">
+                    <option value="g">Giornaliero</option>
+                    <option value="s">Settimanale</option>
+                    <option value="m">Mensile</option>
+                </select>
+            </div>           
+        </div>
+        <button class="bg-white px-4 py-2 rounded-md font-semibold border border-gray-300 mt-5 mr-3 hover:cursor-pointer hover:bg-gray-100 duration-200">Esporta tutti i dati</button>
+        <button class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:cursor-pointer hover:bg-red-600 duration-200">Elimina dati inattivi</button>
+    </div>
+    <div class="mt-5">
+        <button class="bg-white font-semibold p-2 px-4 rounded-md border border-gray-300 mr-3
+        hover:cursor-pointer hover:bg-gray-200 duration-200">Annulla</button>
+        <button class="text-white bg-[#10B981] font-semibold p-2 px-4 rounded-md border border-gray-300
+        hover:cursor-pointer hover:bg-[#059669] duration-200">Salva modifiche</button>
+    </div>
+</div>

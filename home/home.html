@@ -1,0 +1,134 @@
+<div class="grid grid-cols-[260px_1fr] grid-rows-[56px_1fr] gap-y-5 min-h-screen">
+<app-aside [currentPage]="'home'" class="row-span-2"></app-aside>
+<app-header [namePage]="'Dashboard'"></app-header>
+
+<main class="p-6 col-start-2">
+  <h1 class="font-semibold text-2xl mb-8">Dashboard</h1>
+  @if(prenotazioniDaConfermare > 0){
+    <div class="flex justify-between items-center bg-amber-100 p-3 border border-amber-300 rounded-xl">
+    <div class="flex">
+      <svg id="Layer_1" class="w-5 mr-4" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 111.24"><defs><style>.cls-1{fill:#fec901;fill-rule:evenodd;}.cls-2{fill:#010101;}</style></defs><title>risk</title><path d="M2.5,85l43-74.41h0a22.59,22.59,0,0,1,8-8.35,15.72,15.72,0,0,1,16,0,22.52,22.52,0,0,1,7.93,8.38l.23.44,42.08,73.07a20.91,20.91,0,0,1,3,10.84A16.44,16.44,0,0,1,121,102.4a15.45,15.45,0,0,1-5.74,6,21,21,0,0,1-11.35,2.78v0H17.7c-.21,0-.43,0-.64,0a19,19,0,0,1-7.83-1.74,15.83,15.83,0,0,1-6.65-5.72A16.26,16.26,0,0,1,0,95.18a21.66,21.66,0,0,1,2.2-9.62c.1-.2.2-.4.31-.59Z"/><path class="cls-1" d="M9.09,88.78l43-74.38c5.22-8.94,13.49-9.2,18.81,0l42.32,73.49c4.12,6.79,2.41,15.9-9.31,15.72H17.7C9.78,103.79,5,97.44,9.09,88.78Z"/><path class="cls-2" d="M57.55,83.15a5.47,5.47,0,0,1,5.85-1.22,5.65,5.65,0,0,1,2,1.3A5.49,5.49,0,0,1,67,86.77a5.12,5.12,0,0,1-.08,1.4,5.22,5.22,0,0,1-.42,1.34,5.51,5.51,0,0,1-5.2,3.25,5.63,5.63,0,0,1-2.26-.53,5.51,5.51,0,0,1-2.81-2.92A6,6,0,0,1,55.9,88a5.28,5.28,0,0,1,0-1.31h0a6,6,0,0,1,.56-2,4.6,4.6,0,0,1,1.14-1.56Zm8.12-10.21c-.19,4.78-8.28,4.78-8.46,0-.82-8.19-2.92-27.63-2.85-35.32.07-2.37,2-3.78,4.55-4.31a11.65,11.65,0,0,1,2.48-.25,12.54,12.54,0,0,1,2.5.25c2.59.56,4.63,2,4.63,4.43V38l-2.84,35Z"/></svg>
+      <div>
+        <h3 class="text-amber-700 font-semibold">{{prenotazioniDaConfermare}} Prenotazion@if(prenotazioniDaConfermare == 1){e}
+          @else{i} da confermare</h3>
+        <div class="text-amber-700">Conferma le prenotazioni per liberare gli slot nel calendario</div>
+      </div>
+    </div>
+    <button class="yellow bg-white p-1 ps-3 pr-3 rounded-sm border border-yellow-500 text-amber-700 text-sm 
+    hover:bg-yellow-50 hover:cursor-pointer duration-300"
+    (click)="cambiaPagina()">Vedi tutte</button>
+  </div>
+  }
+  <div class="grid grid-cols-4 gap-10 mt-6">
+    <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md duration-300">
+      <h3 class="text-gray-500">Prenotazioni oggi</h3>
+      <div class="font-semibold text-4xl mt-2 mb-2">{{prenotazioniOggi}}</div>
+      <div class="flex items-center">
+        @if(percentualePrenotazioniIeriOggi > 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-green-500" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else if(percentualePrenotazioniIeriOggi < 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-red-500 rotate-180" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-gray-500 rotate-90" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+          }
+      <div class="text-sm" [class.text-green-500]="percentualePrenotazioniIeriOggi > 0"
+          [class.text-red-500]="percentualePrenotazioniIeriOggi < 0">
+          {{percentualePrenotazioniIeriOggi}}% vs ieri
+         </div>
+      </div>
+    </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md duration-300">
+      <h3 class="text-gray-500">Ricavi Mese</h3>
+      <div class="font-semibold text-4xl mt-2 mb-2">€{{ricaviMensili}}</div>
+      <div class="flex items-center">
+        @if(percentualeRicaviMensili > 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-green-500" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else if(percentualeRicaviMensili < 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-red-500 rotate-180" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-gray-500 rotate-90" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+          }
+        <div class="text-sm" [class.text-green-500]="percentualeRicaviMensili > 0"
+          [class.text-red-500]="percentualeRicaviMensili < 0"
+        >{{percentualeRicaviMensili}}% vs mese scorso</div>
+      </div>
+      
+    </div>
+        <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md duration-300">
+      <h3 class="text-gray-500">Tasso Occupazione</h3>
+      <div class="font-semibold text-4xl mt-2 mb-2">{{percentualePrenotazioniMensili}}%</div>
+      <div class="flex items-center">
+          @if(aumentoPercentialePrenotazioniMensili > 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-green-500" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else if(aumentoPercentialePrenotazioniMensili < 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-red-500 rotate-180" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-gray-500 rotate-90" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+          }
+        <div class="text-sm" [class.text-green-500]="aumentoPercentialePrenotazioniMensili > 0"
+          [class.text-red-500]="aumentoPercentialePrenotazioniMensili < 0"
+        >{{aumentoPercentialePrenotazioniMensili}}% vs scorso mese</div>
+      </div>
+      
+    </div>
+      <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md duration-300">
+      <h3 class="text-gray-500">Nuovi Clienti</h3>
+      <div class="font-semibold text-4xl mt-2 mb-2">{{nuoviClientiMensili}}</div>
+      <div class="flex items-center">
+        @if(nuoviClientiMensili > 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-green-500" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else if(nuoviClientiMensili < 0){
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-red-500 rotate-180" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+        }
+        @else {
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-2 mr-2 text-gray-500 rotate-90" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 404 511.5"><path fill-rule="nonzero" d="m219.24 72.97.54 438.53h-34.95l-.55-442.88L25.77 241.96 0 218.39 199.73 0 404 222.89l-25.77 23.58z"/></svg>
+          }
+        <div class="text-sm"[class.text-green-500]="nuoviClientiMensili > 0"
+          [class.text-red-500]="nuoviClientiMensili < 0"
+        >{{nuoviClientiMensili}} questo mese</div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="flex gap-x-5">
+  <div class="bg-white mt-8 border border-gray-200 rounded-md pr-5 pb-5 w-full max-w-208.5">
+    <div class="flex items-center justify-between border-b border-gray-200 mb-5">
+      <h2 class="font-semibold text-lg p-5">Agenda di oggi</h2>
+      <div class="flex text-blue-500 hover:cursor-pointer hover:text-blue-700 duration-300">
+        <div class="text-sm font-semibold">Vedi calendario</div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 ms-2" fill="currentColor" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 404.39"><path fill-rule="nonzero" d="M438.95 219.45 0 219.99v-34.98l443.3-.55L269.8 25.79 293.39 0 512 199.92 288.88 404.39l-23.59-25.8z"/></svg>
+      </div>
+    </div>
+    
+    <app-card-agenda [servizi]="prenotazioniGiornoCorrente"></app-card-agenda>
+  </div>
+
+  <div class="bg-white mt-8 border border-gray-200 rounded-md pr-5 pb-5 w-full max-w-208.5">
+    <div class="flex items-center justify-between border-b border-gray-200 mb-5">
+      <h2 class="font-semibold text-lg p-5">Attività recenti</h2>
+      <div class="flex text-blue-500 hover:cursor-pointer hover:text-blue-700 duration-300">
+        <div class="text-sm font-semibold">Vedi tutto</div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 ms-2" fill="currentColor" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 404.39"><path fill-rule="nonzero" d="M438.95 219.45 0 219.99v-34.98l443.3-.55L269.8 25.79 293.39 0 512 199.92 288.88 404.39l-23.59-25.8z"/></svg>
+      </div>
+    </div>
+    <div class="flex pl-5">
+      <div class="w-7 h-7 bg-gray-300 rounded-full mr-3">
+
+      </div>
+      <div>
+        <span class="font-semibold">Nuova prenotazione </span><span>da Mario Rossi </span><span>per domani alle 10:00</span>
+        <div class="text-xs text-gray-500">5 minuti fa</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</main>
+</div>

@@ -1,0 +1,214 @@
+<div class="p-10 pt-5">
+    <h2 class="font-semibold text-3xl">Calendario & Orari</h2>
+    <div class="text-gray-500 mt-3">Configura gli orari di apertura e le impostazioni del calendario</div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 class="font-semibold text-lg">Orari di Apertura</h3>
+        </div>
+        <table class="w-full mt-3">
+            <thead class="bg-gray-100 text-gray-500 border-b border-gray-300">
+                <tr>
+                    <th class="font-normal p-3">Giorno</th>
+                    <th class="font-normal p-3">Apertura</th>
+                    <th class="font-normal p-3">Chiusura</th>
+                    <th class="font-normal p-3">Aperto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center p-3">Lunedì</td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="09:00"></td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="19:00"></td>
+                    <td class="p-3 text-center align-middle">
+                        <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer inline-block top-2"
+                        [class.bg-gray-300]="!enabled[0]"
+                        [class.bg-green-500]="enabled[0]"
+                        (click)="enabled[0] = !enabled[0]">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                                [class.-translate-x-5]="!enabled[0]"
+                                [class.translate-x-0]="enabled[0]">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center p-3">Martedì</td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="09:00"></td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="19:00"></td>
+                    <td class="p-3 text-center align-middle">
+                        <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer inline-block top-2"
+                        [class.bg-gray-300]="!enabled[1]"
+                        [class.bg-green-500]="enabled[1]"
+                        (click)="enabled[1] = !enabled[1]">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                                [class.-translate-x-5]="!enabled[1]"
+                                [class.translate-x-0]="enabled[1]">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center p-3">Mercoledì</td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="09:00"></td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="19:00"></td>
+                    <td class="p-3 text-center align-middle">
+                        <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer inline-block top-2"
+                        [class.bg-gray-300]="!enabled[2]"
+                        [class.bg-green-500]="enabled[2]"
+                        (click)="enabled[2] = !enabled[2]">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                                [class.-translate-x-5]="!enabled[2]"
+                                [class.translate-x-0]="enabled[2]">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center p-3">Giovedì</td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="09:00"></td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="19:00"></td>
+                    <td class="p-3 text-center align-middle">
+                        <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer inline-block top-2"
+                        [class.bg-gray-300]="!enabled[3]"
+                        [class.bg-green-500]="enabled[3]"
+                        (click)="enabled[3] = !enabled[3]">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                                [class.-translate-x-5]="!enabled[3]"
+                                [class.translate-x-0]="enabled[3]">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center p-3">Venerdì</td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="09:00"></td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="19:00"></td>
+                    <td class="p-3 text-center align-middle">
+                        <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer inline-block top-2"
+                        [class.bg-gray-300]="!enabled[4]"
+                        [class.bg-green-500]="enabled[4]"
+                        (click)="enabled[4] = !enabled[4]">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                                [class.-translate-x-5]="!enabled[4]"
+                                [class.translate-x-0]="enabled[4]">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center p-3">Sabato</td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="09:00"></td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="19:00"></td>
+                    <td class="p-3 text-center align-middle">
+                        <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer inline-block top-2"
+                        [class.bg-gray-300]="!enabled[5]"
+                        [class.bg-green-500]="enabled[5]"
+                        (click)="enabled[5] = !enabled[5]">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                                [class.-translate-x-5]="!enabled[5]"
+                                [class.translate-x-0]="enabled[5]">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center p-3">Domenica</td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="09:00"></td>
+                    <td class="text-center p-3"><input class="border border-gray-300 px-2 py-2.5 rounded-md w-27.5 relative left-5" type="time" value="19:00"></td>
+                    <td class="p-3 text-center align-middle">
+                        <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer inline-block top-2"
+                        [class.bg-gray-300]="!enabled[6]"
+                        [class.bg-green-500]="enabled[6]"
+                        (click)="enabled[6] = !enabled[6]">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                                [class.-translate-x-5]="!enabled[6]"
+                                [class.translate-x-0]="enabled[6]">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+            <h3 class="font-semibold text-lg">Impostazioni Slot</h3>
+        </div>
+        <div class="flex gap-x-3 w-full">
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Durata Slot Predefinita</div>
+                <select class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="info@beautysalon.it">
+                    <option value="15">15 minuti</option>
+                    <option value="30" selected>30 minuti</option>
+                    <option value="45">45 minuti</option>
+                    <option value="60">60 minuti</option>
+                </select>
+                <div class="text-xs text-gray-500 mt-3">La durata dello slot tra una prenotazione e l'altra</div>
+            </div> 
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Tempo Buffer (minuti)</div>
+                <input type="number" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="10">
+                <div class="text-xs text-gray-500 mt-3">Tempo di pausa tra un appuntamento e l'altro</div>
+            </div>           
+        </div>
+        <div class="flex gap-x-3 w-full">
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Preavviso Minimo (ore)</div>
+                <input type="number" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="2">
+                <div class="text-xs text-gray-500 mt-3">Ore di preavviso necessarie per prenotare</div>
+            </div> 
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Prenotazioni Anticipate (giorni)</div>
+                <input type="number" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="60">
+                <div class="text-xs text-gray-500 mt-3">Quanti giorni in anticipo si può prenotare</div>
+            </div>           
+        </div>
+    </div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <h3 class="font-semibold text-lg">Giorni Festivi</h3>
+        </div>
+        <div class="flex items-center gap-x-2 bg-blue-50 border border-blue-200 p-4 mt-3 rounded-lg">
+            <svg class="w-5 h-5 text-blue-800" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <div class="text-blue-800">Aggiungi i giorni festivi in cui l'attività resterà chiusa. Le prenotazioni verranno automaticamente bloccate.</div>
+        </div>
+        <div class="flex gap-x-3 w-full mt-3">
+            <div class="flex-1">
+                <input type="date" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500">
+            </div> 
+            <div class="flex-1">
+                <input type="text" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500 text-gray-500" placeholder="Nome Festività">
+            </div>
+            <button class="text-white bg-[#10B981] font-semibold p-2 px-4 rounded-md border border-gray-300
+        hover:cursor-pointer hover:bg-[#059669] duration-200 relative top-1">+ Aggiungi</button>         
+        </div>
+        <div class="flex items-center justify-between bg-gray-100 mt-4 rounded-lg pr-4">
+            <div class="flex items-center gap-x-2 bg-gray-100 p-3 pl-4 rounded-lg">
+                <svg class="w-4.5 h-4.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <div>
+                <div class="font-semibold">Natale</div>
+                <div class="text-gray-500 text-sm">25/12/2024</div>
+            </div>
+            </div>
+            <button class="hover:cursor-pointer hover:bg-red-100 duration-200 w-7.5 h-8.5 flex items-center justify-center rounded-lg">
+                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            </button>
+        </div>
+    </div>
+    <div class="mt-5">
+        <button class="bg-white font-semibold p-2 px-4 rounded-md border border-gray-300 mr-3
+        hover:cursor-pointer hover:bg-gray-200 duration-200">Annulla</button>
+        <button class="text-white bg-[#10B981] font-semibold p-2 px-4 rounded-md border border-gray-300
+        hover:cursor-pointer hover:bg-[#059669] duration-200">Salva modifiche</button>
+    </div>
+</div>

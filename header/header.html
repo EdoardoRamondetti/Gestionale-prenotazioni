@@ -1,0 +1,27 @@
+<nav class="bg-white p-3 pb-2 ps-5 pr-5 flex justify-between border-b border-gray-200 
+fixed top-0 left-65 right-0 z-50">
+    <div class="flex w-full">
+        <li class="text-gray-500 list-none flex items-center">{{namePage}}</li>
+        <li class="text-gray-500 list-none ml-4 p-0.5 flex items-center relative w-full max-w-100">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="gray" class="w-6 pt-1 absolute left-3 top-1/2 -translate-y-1/2" xml:space="preserve" viewBox="0 0 101 101" id="search">
+  <path d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z"></path>
+</svg><input type="text"
+        class="outline-none border border-gray-300 rounded-sm p-1 ps-10 pr-3 w-full max-w-100
+        focus:outline-none focus:ring-1 focus:ring-blue-300/50
+         focus:border-blue-500 transition-all duration-200" placeholder="Cerca clienti, prenotazioni..." name="" id=""></li>
+    </div>
+    <div class="flex">
+    <li class="list-none flex items-center ml-8 relative hover:cursor-pointer hover:bg-gray-200 duration-300 p-2 rounded-sm">
+        <div class="absolute w-1.5 h-1.5 left-7 bottom-8 bg-red-500 rounded-2xl"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" xml:space="preserve" viewBox="0 0 512 512" id="bell">
+  <path d="M257 120.471c7.083 0 23.911 4.479 23.911 4.479 45.589 10.447 77.678 52.439 77.678 99.85v127.612l9.321 9.364 7.788 7.823H136.302l7.788-7.823 9.321-9.364V224.8c0-47.41 32.089-89.403 77.678-99.85 0 0 18.043-4.479 23.911-4.479M256 48c-17.602 0-31.059 13.518-31.059 31.2v14.559c-59.015 13.523-103.53 67.601-103.53 131.041v114.4L80 380.8v20.8h352v-20.8l-41.411-41.6V224.8c0-63.44-44.516-117.518-103.53-131.041V79.2c0-17.682-13.457-31.2-31.059-31.2zm41.411 374.4h-82.823c0 22.881 18.633 41.6 41.412 41.6s41.411-18.719 41.411-41.6z"></path>
+</svg>
+    </li>
+    <li class="list-none ml-4 flex items-center hover:cursor-pointer hover:bg-gray-200 duration-300 p-2 rounded-sm">
+        <div class="w-7 h-7 rounded-2xl p-4 flex justify-center items-center font-semibold text-blue-500" style="background-color: #DBEAFE;">
+            <span class="text-sm">{{name.substring(0,1)}}{{surname.substring(0,1)}}</span>
+        </div>
+        <span class="font-semibold ml-3 mr-3 flex gap-x-2"><span>{{name}}</span> <span>{{surname}}</span></span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 266.77"><path fill-rule="nonzero" d="M493.12 3.22c4.3-4.27 11.3-4.3 15.62-.04a10.85 10.85 0 0 1 .05 15.46L263.83 263.55c-4.3 4.28-11.3 4.3-15.63.05L3.21 18.64a10.85 10.85 0 0 1 .05-15.46c4.32-4.26 11.32-4.23 15.62.04L255.99 240.3 493.12 3.22z"/></svg></li>
+    </div>
+</nav>

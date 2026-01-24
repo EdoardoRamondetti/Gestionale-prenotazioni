@@ -1,0 +1,25 @@
+@for (item of servizi; track $index) {
+<div class="border border-gray-200 flex justify-between ml-5 rounded-lg pt-4 pb-4 pr-3 pl-3 hover:cursor-pointer hover:border-blue-500">
+    <div class="flex">
+        <div class="text-gray-500 font-medium text-sm">{{item.startTime}}</div>
+        <div class="ml-9">
+            <h3 class="font-semibold text-lg">{{item.client.name}}</h3>
+            <div class="flex text-sm text-gray-500">
+                <h4>{{item.service.name}}</h4>
+                <div class="ml-2">• {{item.service.duration}} min</div>
+            </div>
+            <h3 class="text-sm text-gray-600 mt-2">Con 👤 {{item.staff.name}}</h3>
+            
+        </div>
+    </div>
+    
+    <div class="rounded-xl text-sm p-3 font-semibold"
+    [class.bg-green-300]="item.status == 'confirmed'"
+    [class.text-green-800]="item.status == 'confirmed'"
+    [class.bg-yellow-300]="item.status == 'inCurrent'"
+    [class.text-yellow-800]="item.status == 'inCurrent'">
+        @if(item.status == "confirmed"){Confermata}
+        @else {Non confermata}
+    </div>
+</div>
+}

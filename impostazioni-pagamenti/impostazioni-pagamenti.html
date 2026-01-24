@@ -1,0 +1,141 @@
+<div class="p-10 pt-5">
+    <h2 class="font-semibold text-3xl">Pagamenti</h2>
+    <div class="text-gray-500 mt-3">Configura i metodi di pagamento e le politiche</div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+            <h3 class="font-semibold text-lg">Metodi di Pagamento</h3>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Contanti</div>
+                <div class="text-gray-500 text-sm">Pagamento in contanti al momento del servizio</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[0]"
+                    [class.bg-green-500]="enabled[0]"
+                    (click)="enabled[0] = !enabled[0]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[0]"
+                            [class.translate-x-0]="enabled[0]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Carta di Credito/Debito</div>
+                <div class="text-gray-500 text-sm">Pagamento con POS fisico o virtuale</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[1]"
+                    [class.bg-green-500]="enabled[1]"
+                    (click)="enabled[1] = !enabled[1]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[1]"
+                            [class.translate-x-0]="enabled[1]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 border-b border-gray-200 pb-3">
+            <div>
+                <div class="font-semibold">Bonifico Bancario</div>
+                <div class="text-gray-500 text-sm">Pagamento tramite bonifico anticipato</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[2]"
+                    [class.bg-green-500]="enabled[2]"
+                    (click)="enabled[2] = !enabled[2]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[2]"
+                            [class.translate-x-0]="enabled[2]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="flex justify-between mt-6 pb-3">
+            <div>
+                <div class="font-semibold">Pagamento Online (Stripe)</div>
+                <div class="text-gray-500 text-sm">Accetta pagamenti online al momento della prenotazione</div>
+            </div>
+            <div class="mt-5 flex gap-x-2">
+                    <div class="w-11 h-6 rounded-xl relative hover:cursor-pointer"
+                    [class.bg-gray-300]="!enabled[3]"
+                    [class.bg-green-500]="enabled[3]"
+                    (click)="enabled[3] = !enabled[3]">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1/2 -translate-y-1/2 left-5.5 duration-200"
+                            [class.-translate-x-5]="!enabled[3]"
+                            [class.translate-x-0]="enabled[3]">
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center justify-between">
+            <div class="flex gap-x-3">
+                <div class="bg-[#635BFF] text-white text-2xl font-semibold w-12 h-12 flex justify-center items-center rounded-lg">S</div>
+                <div>
+                    <div class="font-semibold">Stripe</div>
+                    <div class="text-gray-500">Pagamenti online sicuri</div>
+                </div>
+            </div>
+            <div class="text-gray-500 rounded-2xl bg-gray-200 px-3 py-1">Non connesso</div>
+        </div>
+        <div class="flex gap-x-2 bg-blue-50 border border-blue-200 p-4 mt-3 rounded-lg">
+            <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mt-0.75 text-blue-800"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <div>
+                <div class="text-blue-800 font-semibold">Come connettere Stripe:</div>
+                <div class="text-blue-800">
+                    1. Creare account su <a href="https://stripe.com/it" class="underline">Stripe.com</a><br>
+                    2. Vai su Dashboard → Developers → API keys <br>
+                    3. Copia la "Publishable key" e "Secret key" <br>
+                    4. Incollale qui sotto
+                </div>
+            </div>
+        </div>
+        <div class="font-semibold mt-3">Stripe Publishable Key *</div>
+        <input type="email" class="text-lg text-gray-500 mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" placeholder="pk_test_ ...">
+        <div class="text-xs text-gray-500 mt-3">Chiave pubblica visibile nel frontend</div>
+        <div class="font-semibold mt-3">Stripe Secret Key *</div>
+        <input type="email" class="text-lg text-gray-500 mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" placeholder="sk_test_ ...">
+        <div class="text-xs text-gray-500 mt-3">⚠️ Chiave segreta - non condividere mai</div>
+        <button class="text-white bg-[#10B981] font-semibold p-2 px-4 rounded-md border border-gray-300
+        hover:cursor-pointer hover:bg-[#059669] duration-200 w-full mt-5">Connetti Stripe</button>
+    </div>
+    <div class="bg-white rounded-lg mt-5 p-5 w-full border border-gray-300">
+        <div class="flex items-center gap-x-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <h3 class="font-semibold text-lg">Politiche di Pagamento</h3>
+        </div>
+        <div class="flex gap-x-3 w-full">
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Richiedi Deposito (%)</div>
+                <input type="number" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="0">
+                <div class="text-xs text-gray-500 mt-3">0 = nessun deposito richiesto</div>
+            </div> 
+            <div class="flex-1">
+                <div class="font-semibold mt-3">Cancellazione Gratuita (ore)</div>
+                <input type="number" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="24">
+                <div class="text-xs text-gray-500 mt-3">Ore di preavviso per cancellazione gratuita</div>
+            </div>           
+        </div>
+        <div class="font-semibold mt-3">Penale Cancellazione Tardiva (%)</div>
+        <input type="number" class="mt-2 border border-gray-300 w-full p-2 pl-3 rounded-md outline-none focus:ring focus:ring-blue-500" value="50">
+        <div class="text-xs text-gray-500 mt-3">Percentuale del deposito trattenuta</div>
+    </div>
+    <div class="mt-5">
+        <button class="bg-white font-semibold p-2 px-4 rounded-md border border-gray-300 mr-3
+        hover:cursor-pointer hover:bg-gray-200 duration-200">Annulla</button>
+        <button class="text-white bg-[#10B981] font-semibold p-2 px-4 rounded-md border border-gray-300
+        hover:cursor-pointer hover:bg-[#059669] duration-200">Salva modifiche</button>
+    </div>
+</div>
