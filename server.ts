@@ -139,7 +139,6 @@ app.get("/api/nuoviClientiMensili",async function(req,res,next){
     let collection = client.db(dbName).collection("Prenotazioni")
 
     const dataOggi = new Date().toISOString().split('T')[0];
-    const primoDelMese = dataOggi!.substring(0, 8) + "01"
     let data = new Date()
     let annoCorrente = data.getFullYear()
     let mesePrecedente = data.getMonth()
@@ -200,6 +199,67 @@ app.get("/api/getPrenotazioniDaConfermare",async function(req,res,next){
     })
 })
 
+app.get("/api/getPrenotazioniMensili",async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let collection = client.db(dbName).collection("Prenotazioni")
+
+    const dataOggi = new Date().toISOString().split('T')[0];
+    let data = new Date()
+    let annoCorrente = data.getFullYear()
+    let mesePrecedente = data.getMonth()
+    let primoDelMesePrecedente = annoCorrente + "-" + mesePrecedente + "-" + "01"
+    const meseSuccessivo = parseInt(dataOggi!.substring(5,7))+1
+    const meseDopo = dataOggi!.substring(0,5) + "0"+meseSuccessivo + "-01"
+
+    const request = collection.find({
+        "date":{
+            $gte:primoDelMesePrecedente,
+            $lt:meseDopo
+        }
+    }).toArray()
+
+    request.then(function(data){
+        res.send(data)
+    })
+
+    request.catch(function(err){
+        res.status(500).send("Errore esecuzione query: " + err)
+    })
+
+    request.finally(function(){
+        client.close()
+    })
+})
+
+app.get("/api/getAllPrenotazioni",async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let collection = client.db(dbName).collection("Prenotazioni")
+
+    const request = collection.find({}).toArray()
+
+    request.then(function(data){
+        res.send(data)
+    })
+
+    request.catch(function(err){
+        res.status(500).send("Errore esecuzione query: " + err)
+    })
+
+    request.finally(function(){
+        client.close()
+    }) 
+})
+
 app.get("/api/getSettings",async function(req,res,next){
     const client = new MongoClient(connectionString!)
     await client.connect().catch(function(err){
@@ -235,11 +295,11 @@ app.patch("/api/modificaPrenotazione",async function(req,res,next){
     let collection = client.db(dbName).collection("Prenotazioni")
 
     let tipoModifica = req.body["tipoModifica"]
-    const _id = req.body["id"]
+    const _id = new ObjectId(req.body["id"])
 
     tipoModifica = tipoModifica == "rifiuta" ? "cancelled" : "confirmed"
 
-    const request = collection.updateOne({"_id":_id },{$set: {"status":tipoModifica}})
+    const request = collection.updateOne({"_id": _id },{$set: {"status":tipoModifica}})
 
     request.then(function(data){
 
@@ -255,6 +315,202 @@ app.patch("/api/modificaPrenotazione",async function(req,res,next){
     }) 
 })
 
+app.get("/api/getServiceClientsOperators",async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let User = client.db(dbName).collection("Clienti")
+    let Servizi = client.db(dbName).collection("Servizi")
+    let Staff = client.db(dbName).collection("Staff")
+    let Prenotazioni = client.db(dbName).collection("Prenotazioni")
+    
+    const [users, servizi, staff, prenotazioni] = await Promise.all([
+      User.find().toArray(),
+      Servizi.find().toArray(),
+      Staff.find().toArray(),
+      Prenotazioni.find().sort({_id:"desc"}).limit(1).toArray()
+    ]);
+
+    console.log(Prenotazioni)
+
+    res.send({
+        users,
+        servizi,
+        staff,
+        prenotazioni
+        }
+    )
+})
+
+app.get("/api/getInfoService", async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let collection = client.db(dbName).collection("Servizi")
+
+    const request = collection.find({
+        name:req.query["nameService"]
+        }).toArray()
+
+    request.then(function(data){
+
+        res.send(data)
+    })
+
+    request.catch(function(err){
+        res.status(500).send("Errore esecuzione query: " + err)
+    })
+
+    request.finally(function(){
+        client.close()
+    })
+})
+
+app.post("/api/addPrenotazione",async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let collection = client.db(dbName).collection("Prenotazioni")
+
+    const cliente = req.body["cliente"]
+    const servizio = req.body["servizio"]
+    const data = req.body["data"]
+    const ora = req.body["ora"]
+    const operatore = req.body["operatore"]
+    const price = req.body["price"]
+    const duration = req.body["duration"]
+    const note = req.body["note"]
+
+    let ore = ora.split(":")[0]
+    let minuti = ora.split(":")[1]
+    let date = new Date()
+    date.setHours(ore, minuti, 0, 0);
+    date.setMinutes(date.getMinutes() + parseInt(duration));
+
+    const request = collection.insertOne(
+        {
+            _id:  new ObjectId(),
+            date: data,
+            startTime: ora,
+            endTime:date.toTimeString().slice(0, 5),
+            status:"pending",
+            client:{name:cliente},
+            staff:{name: operatore},
+            service:{name:servizio,price:price, duration:duration},
+            notes: note,
+            createdAt: new Date().toISOString().split("T")[0]
+        }
+    )
+
+    request.then(function(data){
+
+        res.send(data)
+    })
+
+    request.catch(function(err){
+        res.status(500).send("Errore esecuzione query: " + err)
+    })
+
+    request.finally(function(){
+        client.close()
+    }) 
+})
+
+app.patch("/api/modificaDatiPrenotazione",async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let collection = client.db(dbName).collection("Prenotazioni")
+
+    const _id = req.body["_id"]
+    const cliente = req.body["cliente"]
+    const servizio = req.body["servizio"]
+    const data = req.body["data"]
+    const ora = req.body["ora"]
+    const operatore = req.body["operatore"]
+    const price = req.body["price"]
+    const duration = req.body["duration"]
+    const note = req.body["note"]
+
+    let ore = ora.split(":")[0]
+    let minuti = ora.split(":")[1]
+    let date = new Date()
+    date.setHours(ore, minuti, 0, 0);
+    date.setMinutes(date.getMinutes() + parseInt(duration));
+
+    const request = collection.updateOne(
+        {
+            _id: new ObjectId(_id),
+        },
+        {
+        $set: {
+            date: data,
+            startTime: ora,
+            endTime: date.toTimeString().slice(0, 5),
+            client: { name: cliente },
+            staff: { name: operatore },
+            service: { name: servizio, price: price, duration: duration },
+            notes: note
+            }
+        }
+    )
+
+    request.then(function(data){
+
+        res.send(data)
+    })
+
+    request.catch(function(err){
+        res.status(500).send("Errore esecuzione query: " + err)
+    })
+
+    request.finally(function(){
+        client.close()
+    }) 
+})
+
+app.delete("/api/elliminaPrenotazione/:id",async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let collection = client.db(dbName).collection("Prenotazioni")
+
+    const _id = req.params.id
+
+    const request = collection.deleteOne(
+        {
+            _id: new ObjectId(_id),
+        }
+    )
+
+    request.then(function(data){
+
+        res.send(data)
+    })
+
+    request.catch(function(err){
+        res.status(500).send("Errore esecuzione query: " + err)
+    })
+
+    request.finally(function(){
+        client.close()
+    })  
+})
 
 //F. default route
 //se non trova nessuna route che va a buon finire,

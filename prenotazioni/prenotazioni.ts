@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Header } from "../header/header";
 import { Aside } from "../aside/aside";
 import { DataStorage } from '../shared/data-storage';
@@ -49,9 +49,19 @@ export class Prenotazioni {
   servizioModificaPrenotazione:string = ""
   dataModificaPrenotazione:any
   oraModificaPrenotazione:any
-  operatoreModificaPrenotazione:any
+  operatoreModificaPrenotazione:string = ""
   noteModificaPrenotazione:string = ""
   prenotazioneDaModificare:any
+  varClienteModificaPrenotazione:string = ""
+  _idPrenotazioneDaModificare:any
+  showErrorClientModificaPrenotazione:boolean = false
+  showErrorServiceModificaPrenotazione:boolean = false
+  showErrorDataModificaPrenotazione:boolean = false
+  showErrorHourModificaPrenotazione:boolean = false
+  showErrorStaffModificaPrenotazione:boolean = false
+  showCancellaPrenotazioneSection:boolean = false
+  showErrorClientElliminaPrenotazione:boolean = false
+  idPrenotazioneDaElliminare:any
 
   ngOnInit(){
     this.loadPage()
@@ -86,7 +96,6 @@ export class Prenotazioni {
     const id = this.currentItem._id
   this.DataStorage.inviaRichiesta("patch","/modificaPrenotazione",{tipoModifica,id})!.subscribe({
             next: (data) => {
-              console.log(data)
               this.loadPage()
       },
       error: (error) => {
@@ -100,10 +109,15 @@ export class Prenotazioni {
   this.showModalBool = false
   }
   showModalNuovaPrenotazione(){
+    this.showErrorClient = false
+    this.showErrorService = false
+    this.showErrorData = false
+    this.showErrorHour = false
+    this.showErrorStaff = false
+
     this.showNewPrenotationSection = true
     this.DataStorage.inviaRichiesta("get","/getServiceClientsOperators")!.subscribe({
             next: (data) => {
-              console.log(data)
               this.utenti = data["users"]
               this.servizi = data["servizi"]
               this.staff = data["staff"]
@@ -115,8 +129,6 @@ export class Prenotazioni {
   }
 
   getService(e:any){
-    console.log(e.target.value)
-
     this.DataStorage.inviaRichiesta("get","/getInfoService",{"nameService":e.target.value})!.subscribe({
             next: (data) => {
               console.log(data)
@@ -156,7 +168,7 @@ export class Prenotazioni {
     {
       this.DataStorage.inviaRichiesta("post","/addPrenotazione",{"cliente": this.clienteNuovaPrenotazione,
         "servizio":this.servizioNuovaPrenotazione, "data":this.dataNuovaPrenotazione, "ora": this.oraNuovaPrenotazione,
-        "operatore":this.operatoreNuovaPrenotazione, "price":this.priceService, "duration":this.durationService
+        "operatore":this.operatoreNuovaPrenotazione, "price":this.priceService, "duration":this.durationService,"note":this.noteNuovaPrenotazione
       })?.subscribe({})
       this.showNewPrenotationSection = false
       this.loadPage()
@@ -164,6 +176,10 @@ export class Prenotazioni {
   }
 
   loadPage(){
+  this.prenotazioniOggi = 0
+  this.prenotazioniSettimana = 0
+  this.prenotazioniMese = 0
+  this.prenotazioniDaConfermare = 0
   this.DataStorage.inviaRichiesta("get","/getPrenotazioniMensili")!.subscribe({
             next: (data) => {
               console.log(data)
@@ -172,7 +188,6 @@ export class Prenotazioni {
               let giorno = dataCompleta[0]
               const primoGiorno = parseInt(dataCompleta[1]) - (this.giorniSettimana[giorno]-1)
               const ultimoGiorno = primoGiorno+6
-              console.log(giorno)
               if(meseCorrente == 13) meseCorrente = 1
               const dataOggi = new Date().toISOString().split('T')[0];
               const prenotazioni = data
@@ -191,8 +206,7 @@ export class Prenotazioni {
     })
 
     this.DataStorage.inviaRichiesta("get","/getAllPrenotazioni")!.subscribe({
-                  next: (data) => {
-              console.log(data)
+      next: (data) => {
               this.prenotazioni = data
               let cont = 0
               for (const prenotazione of data) {
@@ -214,19 +228,32 @@ export class Prenotazioni {
     })
 }
 
-
 showModificaPrenotazione(prenotazione:any){
-  this.showModificaPrenotazioneSection = true
-  this.prenotazioneDaModificare
-  this.prenotazioneDaModificare = prenotazione
-  console.log(prenotazione)
+  this.showErrorClientModificaPrenotazione = false
+  this.showErrorServiceModificaPrenotazione = false
+  this.showErrorDataModificaPrenotazione = false
+  this.showErrorHourModificaPrenotazione = false
+  this.showErrorStaffModificaPrenotazione = false
+  
+  this._idPrenotazioneDaModificare = prenotazione._id
 
   this.DataStorage.inviaRichiesta("get","/getServiceClientsOperators")!.subscribe({
             next: (data) => {
               console.log(data)
               this.utenti = data["users"]
               this.servizi = data["servizi"]
-              this.staff = data["staff"]
+              this.staff = data["staff"] 
+
+              this.clienteModificaPrenotazione = prenotazione.client.name
+              this.servizioModificaPrenotazione = prenotazione.service.name
+              this.dataModificaPrenotazione = prenotazione.date
+              this.oraModificaPrenotazione = prenotazione.startTime
+              this.operatoreModificaPrenotazione = prenotazione.staff.name
+              this.noteModificaPrenotazione = prenotazione.notes
+              this.priceService = prenotazione.service.price
+              this.durationService = prenotazione.service.duration
+
+              this.showModificaPrenotazioneSection = true
       },
       error: (error) => {
       console.error(error)
@@ -235,6 +262,61 @@ showModificaPrenotazione(prenotazione:any){
 }
 
 modificaPrenotazione(){
+  this.showErrorClientModificaPrenotazione = false
+  this.showErrorServiceModificaPrenotazione = false
+  this.showErrorDataModificaPrenotazione = false
+  this.showErrorHourModificaPrenotazione = false
+  this.showErrorStaffModificaPrenotazione = false
 
-}
+  if(this.clienteModificaPrenotazione == ""){
+      this.showErrorClientModificaPrenotazione = true
+    }
+    if(this.servizioModificaPrenotazione == ""){
+      this.showErrorServiceModificaPrenotazione = true
+    }
+    if(this.dataModificaPrenotazione == null || this.dataNuovaPrenotazione < new Date().toISOString().split("T")[0]){
+      this.showErrorDataModificaPrenotazione = true
+    }
+    if(this.oraModificaPrenotazione == null){
+      this.showErrorHourModificaPrenotazione = true
+    }
+    if(this.operatoreModificaPrenotazione == ""){
+      this.showErrorStaffModificaPrenotazione = true
+    }
+    if(this.clienteModificaPrenotazione != "" && this.servizioModificaPrenotazione != "" && 
+      this.dataModificaPrenotazione != null && this.oraModificaPrenotazione != null && this.operatoreModificaPrenotazione != ""
+    )
+  this.DataStorage.inviaRichiesta("patch","/modificaDatiPrenotazione",{"_id":this._idPrenotazioneDaModificare,"cliente": this.clienteModificaPrenotazione,
+        "servizio":this.servizioModificaPrenotazione, "data":this.dataModificaPrenotazione, "ora": this.oraModificaPrenotazione,
+        "operatore":this.operatoreModificaPrenotazione, "price":this.priceService, "duration":this.durationService, "note":
+      this.noteModificaPrenotazione})!.subscribe({
+            next: (data) => {
+              this.showModificaPrenotazioneSection = false
+              this.loadPage()
+      },
+      error: (error) => {
+      console.error(error)
+    }
+    })
+  }
+
+  showCancellaPrenotazione(prenotazione:any){
+    this.showCancellaPrenotazioneSection = true
+    this.currentItem = prenotazione
+    this.showErrorClientElliminaPrenotazione = true
+    this.idPrenotazioneDaElliminare = prenotazione._id
+  }
+
+  elliminaPrenotazione(){
+    this.DataStorage.inviaRichiesta("delete","/elliminaPrenotazione/"+this.idPrenotazioneDaElliminare)!.subscribe({
+            next: (data) => {
+              console.log(data)
+              this.showCancellaPrenotazioneSection = false
+              this.loadPage()
+      },
+      error: (error) => {
+      console.error(error)
+    }
+    })
+  }
 }

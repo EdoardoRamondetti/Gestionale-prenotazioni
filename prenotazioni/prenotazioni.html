@@ -118,13 +118,12 @@
                         <button (click)="showModificaPrenotazione(item)" class="hover:cursor-pointer hover:bg-gray-200 p-1 rounded-sm duration-200" title="Modifica">
                             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                         </button>
-                        <button class="hover:cursor-pointer hover:bg-red-500 p-1 rounded-sm duration-200" title="Ellimina">
+                        <button (click)="showCancellaPrenotazione(item)" class="hover:cursor-pointer hover:bg-red-500 p-1 rounded-sm duration-200" title="Ellimina">
                             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
                     </div>
                 </td>
                 </tr>
-               
                 }
             </tbody>
              <div [hidden]="!showModalBool" class="flex items-center justify-center fixed inset-0 z-50 bg-black/40">
@@ -244,7 +243,6 @@
                     </div>
                 </div>
 
-                @if(showModificaPrenotazioneSection){
             <div [hidden]="!showModificaPrenotazioneSection" class="flex items-center justify-center fixed inset-0 z-50 bg-black/40">
                     <div id="modal" class="bg-white rounded-2xl py-6  w-full max-w-150">
                         <div class="flex justify-between border-b border-gray-300">
@@ -254,37 +252,37 @@
                         </div>
                         <div class="p-6 pb-0">
                             <div class="font-semibold">Nuovo cliente *</div>
-                            <select [(ngModel)]="prenotazioneDaModificare.client.name" name="" id="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500">
+                            <select id="select" [(ngModel)]="clienteModificaPrenotazione" name="" id="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500">
                                 <option value="">Seleziona un cliente</option>
                                     @for (item of utenti; track $index) {
-                                        <option>{{item.name}} {{item.surname}}</option>
-                                    }
+                                        <option [selected]="clienteModificaPrenotazione == item.name">{{item.name}}</option>
+                                    }0
                             </select>
-                            @if(showErrorClient){
+                            @if(showErrorClientModificaPrenotazione){
                                 <div class="text-red-500 px-2">Scegli un cliente</div>
                             }
                             <div class="mt-5 font-semibold">Servizio *</div>
                             <select (change)="getService($event)" [(ngModel)]="servizioModificaPrenotazione" name="" id="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500">
                                 <option value="">Seleziona un servizio</option>
                                     @for (item of servizi; track $index) {
-                                        <option>{{item.name}}</option>
+                                        <option [selected]="servizioModificaPrenotazione == item.name" >{{item.name}}</option>
                                     }
                             </select>
-                            @if(showErrorService){
+                            @if(showErrorServiceModificaPrenotazione){
                                 <div class="text-red-500 px-2">Scegli un servizio</div>
                             }
                             <div class="flex mt-5 gap-x-5 justify-center">
                                 <div class="w-full">
                                     <h2 class="font-semibold">Data *</h2>
-                                    <input [(ngModel)]="dataModificaPrenotazione" type="date" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500" name="" id="">
-                                    @if(showErrorData){
+                                    <input value="{{dataModificaPrenotazione}}" [(ngModel)]="dataModificaPrenotazione" type="date" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500" name="" id="">
+                                    @if(showErrorDataModificaPrenotazione){
                                     <div class="text-red-500 px-2">Scegli una data</div>
                                     }
                                 </div>
                                 <div class="w-full">
                                     <div class="font-semibold">Ora *</div>
-                                    <input [(ngModel)]="oraModificaPrenotazione" type="time" name="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500" id="">
-                                    @if(showErrorHour){
+                                    <input value="{{oraModificaPrenotazione}}" [(ngModel)]="oraModificaPrenotazione" type="time" name="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500" id="">
+                                    @if(showErrorHourModificaPrenotazione){
                                     <div class="text-red-500 px-2">Scegli un'ora</div>
                                     }
                                 </div>
@@ -293,24 +291,69 @@
                             <select [(ngModel)]="operatoreModificaPrenotazione" name="" id="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500">
                                 <option value="">Seleziona un Operatore</option>
                                     @for (item of staff; track $index) {
-                                        <option>{{item.name}} {{item.surname}}</option>
+                                        <option [selected]="operatoreModificaPrenotazione == item.name" >{{item.name}}</option>
                                     }
                             </select>
-                            @if(showErrorStaff){
+                            @if(showErrorStaffModificaPrenotazione){
                                 <div class="text-red-500 px-2">Scegli un operatore</div>
                             }
                             <div class="mt-5 font-semibold">Note (opzionale)</div>
-                            <textarea [(ngModel)]="noteModificaPrenotazione" name="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500" id=""></textarea>
+                            <textarea value="{{noteModificaPrenotazione}}" [(ngModel)]="noteModificaPrenotazione" name="" class="border border-gray-200 py-2 px-2 w-full mt-2 rounded-md outline-none focus:border focus:border-blue-500" id=""></textarea>
                             <div class="flex justify-end gap-x-2 mt-5">
                                 <button (click)="showModificaPrenotazioneSection=false" class="flex items-center border border-gray-200 bg-white text-black gap-x-2 rounded-lg py-1.5 px-6 font-
                                 semibold hover:cursor-pointer hover:bg-gray-100 duration-200">Annulla</button>
                                 <button (click)="modificaPrenotazione()" class="bg-blue-500 text-white rounded-lg py-1.5 px-6 font-semibold hover:cursor-pointer
-                                hover:bg-blue-600 duration-200">Crea prenotazione</button>
+                                hover:bg-blue-600 duration-200">Modifica prenotazione</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                }
+
+            <div [hidden]="!showCancellaPrenotazioneSection" class="flex items-center justify-center fixed inset-0 z-50 bg-black/40">
+                    <div id="modal" class="bg-white rounded-2xl p-7 w-full max-w-125">
+                        <div _ngcontent-ng-c589133756="" class="mx-auto my-0 rounded-full w-16 h-16 flex items-center justify-center bg-[#FEE2E2]">
+                            <svg _ngcontent-ng-c589133756="" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-6 h-6 text-red-500"><path _ngcontent-ng-c589133756="" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </div>
+                        <h2 class="text-center font-semibold text-2xl mt-2">
+                            Ellimina Prenotazione
+                        </h2>
+                        <p class="text-gray-500 mt-3 text-center">
+                        Vuoi elliminare la prenotazione di <span class="font-bold text-gray-600">
+                            @if(showErrorClientElliminaPrenotazione){
+                                {{currentItem.client.name}}
+                            }
+                        </span> per il servizio 
+                            <span class="font-bold text-gray-600">
+                                @if(showErrorClientElliminaPrenotazione){
+                                {{currentItem.service.name}}
+                            }
+                            </span> il giorno 
+                            <span class="font-bold text-gray-600">
+                                @if(showErrorClientElliminaPrenotazione){
+                                {{getData(currentItem.date)}}
+                            }
+                            </span>
+                             alle ore 
+                             <span class="font-bold text-gray-600">
+                                @if(showErrorClientElliminaPrenotazione){
+                                {{currentItem.startTime}}
+                             }
+                             </span>?
+                        </p>
+                        <div class="mt-5 flex items-center justify-center gap-x-2">
+                            <button (click)="showCancellaPrenotazioneSection=false" class="flex items-center bg-gray-100 text-black gap-x-2 rounded-lg py-1.5 px-15 font-semibold hover:cursor-pointer
+                            hover:bg-gray-200 duration-200">
+                                Annulla
+                            </button>
+                               <button (click)="elliminaPrenotazione()" class="flex items-center bg-[#10B981] text-white gap-x-2 rounded-lg py-1.5 px-15 font-semibold hover:cursor-pointer
+                            hover:bg-[#059669] duration-200">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-4 h-4"><path _ngcontent-ng-c114663941="" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Conferma
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+                
         </table>
 
         <div class="flex items-center justify-between bg-white border border-t-0 border-gray-300 p-4">
