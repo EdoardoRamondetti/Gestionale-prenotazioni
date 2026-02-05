@@ -140,13 +140,16 @@ app.get("/api/nuoviClientiMensili",async function(req,res,next){
 
     const dataOggi = new Date().toISOString().split('T')[0];
     let data = new Date()
-    let annoCorrente = data.getFullYear()
+    let annoCorrente:any = data.getFullYear()
     let mesePrecedente = data.getMonth()
     if(mesePrecedente == 0){
         mesePrecedente = 12
         annoCorrente--
     }
-    let primoDelMesePrecedente = annoCorrente + "-" + mesePrecedente + "-" + "01"
+    annoCorrente = annoCorrente += "-"
+    if(mesePrecedente<10)
+        annoCorrente += "0"
+    let primoDelMesePrecedente = annoCorrente + mesePrecedente + "-" + "01"
     const meseSuccessivo = parseInt(dataOggi!.substring(5,7))+1
     const meseDopo = dataOggi!.substring(0,5) + "0"+meseSuccessivo + "-01"
 
@@ -497,6 +500,40 @@ app.delete("/api/elliminaPrenotazione/:id",async function(req,res,next){
             _id: new ObjectId(_id),
         }
     )
+
+    request.then(function(data){
+
+        res.send(data)
+    })
+
+    request.catch(function(err){
+        res.status(500).send("Errore esecuzione query: " + err)
+    })
+
+    request.finally(function(){
+        client.close()
+    })  
+})
+
+app.get("/api/ricercaFullText",async function(req,res,next){
+    const client = new MongoClient(connectionString!)
+    await client.connect().catch(function(err){
+        res.status(503).send("Errore di connessione al dbms")
+        return
+    })
+
+    let collection = client.db(dbName).collection("Prenotazioni")
+
+    const valueInput = req.query["value"]
+
+    const request = collection.find({
+    $or: [
+        { "client.name": { $regex: "^" + valueInput, $options: "i" } },
+        { "client.name": { $regex: valueInput, $options: "i" } },
+        { "service.name": { $regex: "^" + valueInput, $options: "i" } },
+        { "staff.name": { $regex: "^" + valueInput, $options: "i" }}
+    ]
+}).toArray()
 
     request.then(function(data){
 
