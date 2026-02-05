@@ -26,7 +26,6 @@ export class Prenotazioni {
   mesi: any = {1: "Gennaio",2: "Febbraio",3: "Marzo",4: "Aprile",5: "Maggio",6: "Giugno",7: "Luglio",
   8: "Agosto",9: "Settembre",10: "Ottobre",11: "Novembre",12: "Dicembre"}
   prenotazioni:any = []
-  resultOperationsConfirm:any = []
   showNewPrenotationSection:boolean = false
   clienteNuovaPrenotazione:string = ""
   servizioNuovaPrenotazione:string = ""
@@ -62,6 +61,9 @@ export class Prenotazioni {
   showCancellaPrenotazioneSection:boolean = false
   showErrorClientElliminaPrenotazione:boolean = false
   idPrenotazioneDaElliminare:any
+  btnState:any = [true,false,false,false,false]
+  filtroAttivo:string = ""
+  valueInputFullTextSearch:string = ""
 
   ngOnInit(){
     this.loadPage()
@@ -102,7 +104,6 @@ export class Prenotazioni {
       console.error(error)
     }
     })
-    this.resultOperationsConfirm[this.currentItem["indice"]] = "Confermata"
     this.showModalBool = false
   }
   annullaFunction() {
@@ -180,7 +181,7 @@ export class Prenotazioni {
   this.prenotazioniSettimana = 0
   this.prenotazioniMese = 0
   this.prenotazioniDaConfermare = 0
-  this.DataStorage.inviaRichiesta("get","/getPrenotazioniMensili")!.subscribe({
+  this.DataStorage.inviaRichiesta("get","/getAllPrenotazioni")!.subscribe({
             next: (data) => {
               console.log(data)
               let meseCorrente = new Date().getMonth() + 1
@@ -196,7 +197,7 @@ export class Prenotazioni {
                 if(prenotazione.date == dataOggi) this.prenotazioniOggi++
                 if(numeroDelMese == meseCorrente ) this.prenotazioniMese++
                 if(prenotazione.status == "pending") this.prenotazioniDaConfermare++
-                if(prenotazione.date.split("-")[2] >= primoGiorno && prenotazione.date.split("-")[2] <= ultimoGiorno)
+                if(numeroDelMese == meseCorrente && prenotazione.date.split("-")[2] >= primoGiorno && prenotazione.date.split("-")[2] <= ultimoGiorno)
                   this.prenotazioniSettimana++
               }
       },
@@ -211,12 +212,10 @@ export class Prenotazioni {
               let cont = 0
               for (const prenotazione of data) {
                 if(prenotazione.status == "pending"){
-                  this.resultOperationsConfirm.push("Da confermare")
                   prenotazione["indice"] = cont
                   cont++
                 }
                 else if(prenotazione.status == "confirmed"){
-                  this.resultOperationsConfirm.push("Confermata")
                   prenotazione["indice"] = cont
                   cont++
                 }
@@ -318,5 +317,60 @@ modificaPrenotazione(){
       console.error(error)
     }
     })
+  }
+
+  selezionaTipoPrenotazione(numeroBtn:number,typeBtn:string){
+    this.deselezionaAllBtn()
+    this.btnState[numeroBtn] = true
+    this.filtroAttivo = typeBtn
+}
+
+  deselezionaAllBtn(){
+    for (let i = 0; i < this.btnState.length; i++) {
+      this.btnState[i] = false
+    }
+  }
+
+  prenotazioniFiltrate() {
+  const oggi = new Date().toISOString().split('T')[0];
+  const domani = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+  const dataCompleta = this.getData(new Date().toISOString()).split(" ")
+  let giorno = dataCompleta[0]
+  const primoGiorno = parseInt(dataCompleta[1]) - (this.giorniSettimana[giorno]-1)
+  const ultimoGiorno = primoGiorno+6
+
+  switch (this.filtroAttivo) {
+    case 'oggi':
+      return this.prenotazioni.filter((p:any) => p.date === oggi);
+
+    case 'domani':
+      return this.prenotazioni.filter((p:any) => p.date === domani);
+
+    case 'settimana':
+      return this.prenotazioni.filter((p:any) => p.date >= primoGiorno && p.date <= ultimoGiorno )
+
+    case 'daConfermare':
+      return this.prenotazioni.filter((p:any) => p.status !== 'confirmed');
+
+    default:
+      return this.prenotazioni;
+    }
+  }
+
+  ricercaFullText(event:any){
+    if(event.target.value.length >= 3){
+      this.DataStorage.inviaRichiesta("get","/ricercaFullText",{"value":this.valueInputFullTextSearch})!.subscribe({
+            next: (data) => {
+              console.log(data)
+              this.prenotazioni = data
+      },
+      error: (error) => {
+      console.error(error)
+    }
+    })
+    }
+    else{
+      this.loadPage()
+    }
   }
 }
